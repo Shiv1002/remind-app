@@ -18,10 +18,11 @@ function Remind({User}) {
 
   useEffect(()=>{
     //start getting data of user
+    
     axios.post('/user/getUser',{uid:User.uid})
     .then((res)=>{setAllRemind(res.data[0].reminders);})
     .catch((err)=>console.log(err))
-  },[User.uid])
+  },[User])
 
   const delRemind = (index) => { 
     var reminderName = 0

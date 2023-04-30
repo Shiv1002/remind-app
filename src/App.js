@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Remind from './Remind';
 import auth from './Firebase'
@@ -7,13 +7,20 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import axios from 'axios';
 
 function App() {
-  const [user,setUser] = useState()
+  const [user,setUser] = useState({uid:localStorage.getItem("userUid"),email:localStorage.getItem("userEmail")})
   const [isLogged, setIsLogged] = useState(false)
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  
+  useEffect(()=>{
+    if (localStorage.getItem("userUid")){
+      setIsLogged(true)
+    }else{
+      console.log("No user found ")
+    }
+  },[])
+
   const clearInput=()=>{
     setEmail("")
     setPassword("")
@@ -29,6 +36,8 @@ function App() {
     clearInput()
     setIsLogged(false)
     setUser()
+    localStorage.removeItem("userUid")
+    localStorage.removeItem("userEmail")
   }
   
   const handleLogin =()=>{
@@ -37,9 +46,11 @@ function App() {
     signInWithEmailAndPassword(auth,email,password)
     .then((userCred)=>
     {
-      console.log(userCred.user)
+      console.log(userCred.user.uid)
       setUser(userCred.user)
       setLogin()
+      localStorage.setItem("userUid",userCred.user.uid)
+      localStorage.setItem("userEmail",userCred.user.email)
     }
   )
     .catch((err)=>{
@@ -64,7 +75,11 @@ function App() {
       console.log('Created user',userCred.user.uid)
       setUser(userCred.user)
       axios.post('/user/postUser',{uid:userCred.user.uid,reminders:[],email:userCred.user.email})
-      .then((rs)=>console.log(rs))
+      .then((rs)=>{
+        console.log(rs)
+        localStorage.setItem("userUid",userCred.user.uid)
+        localStorage.setItem("userEmail",userCred.user.email)
+      })
       .catch((err)=>console.log(err))
       
       setLogin()
