@@ -58,9 +58,6 @@ function App() {
     })
   }
   
-  const handleLogout = () => {
-    setLogout()
-  };
   const signUp=()=>{
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCred)=>{ 
@@ -85,7 +82,7 @@ function App() {
       </>
         :
         <div className='login_page'>
-          <h1></h1>
+          
           <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e)=>setEmail(e.target.value)}/>
           <p className="errorMsg">{emailError}</p>
           <input type='password' value={password} required placeholder='Password' onChange={(e)=>setPassword(e.target.value)}/>

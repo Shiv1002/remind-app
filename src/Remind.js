@@ -21,11 +21,11 @@ function Remind({User}) {
     axios.post('/user/getUser',{uid:User.uid})
     .then((res)=>{setAllRemind(res.data[0].reminders);})
     .catch((err)=>console.log(err))
-  },[])
+  },[User.uid])
 
   const delRemind = (index) => { 
     var reminderName = 0
-    setAllRemind(allRemind.filter((ele, i) => { if (i !== index){ return true }else{reminderName = ele.text}}))
+    setAllRemind(allRemind.filter((ele, i) => { if (i !== index){ return true }else{reminderName = ele.text; return false}}))
     console.log(reminderName)
     //sending update requesst to database
     // sending 0 as parameter to delete reminder with namee
