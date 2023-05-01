@@ -74,7 +74,7 @@ function App() {
     .then((userCred)=>{ 
       console.log('Created user',userCred.user.uid)
       setUser(userCred.user)
-      axios.post('/user/postUser',{uid:userCred.user.uid,reminders:[],email:userCred.user.email})
+      axios.post(process.env.backend+'/user/postUser',{uid:userCred.user.uid,reminders:[],email:userCred.user.email})
       .then((rs)=>{
         console.log(rs)
         localStorage.setItem("userUid",userCred.user.uid)
