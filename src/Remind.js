@@ -18,8 +18,8 @@ function Remind({User}) {
 
   useEffect(()=>{
     //start getting data of user
-    console.log(process.env.URL,'is pinnged')
-    axios.post(process.env.URL+'/user/getUser',{uid:User.uid})
+    console.log(process.env.BACKURL,'is pinnged')
+    axios.post(process.env.BACKURL+'/user/getUser',{uid:User.uid})
     .then((res)=>{setAllRemind(res.data[0].reminders);})
     .catch((err)=>console.log(err))
   },[User])
@@ -30,7 +30,7 @@ function Remind({User}) {
     console.log(reminderName)
     //sending update requesst to database
     // sending 0 as parameter to delete reminder with namee
-    axios.post(process.env.backend+`/user/${User.uid}/0`,{reminderName})
+    axios.post(process.env.BACKURL+`/user/${User.uid}/0`,{reminderName})
     .then((rs)=>console.log(rs.data))
     .catch((err)=>console.log(err))
 
@@ -40,7 +40,7 @@ function Remind({User}) {
     console.log(allRemind)
     //sending update requesst to database
     // sending 1 as parameter to add reminder
-    axios.post(process.env.backend+`/user/${User.uid}/1`,reminder)
+    axios.post(process.env.BACKURL+`/user/${User.uid}/1`,reminder)
     .then((rs)=>console.log(rs.data))
     .catch((err)=>console.log(err))
 
