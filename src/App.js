@@ -74,7 +74,7 @@ function App() {
     .then((userCred)=>{ 
       console.log('Created user',userCred.user.uid)
       setUser(userCred.user)
-      axios.post(process.env.BACKURL+'/user/postUser',{uid:userCred.user.uid,reminders:[],email:userCred.user.email})
+      axios.post('https://reminderserver-production.up.railway.app/user/postUser',{uid:userCred.user.uid,reminders:[],email:userCred.user.email})
       .then((rs)=>{
         console.log(rs)
         localStorage.setItem("userUid",userCred.user.uid)
