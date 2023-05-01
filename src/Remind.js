@@ -51,8 +51,9 @@ function Remind({User}) {
 
   return (
     <div className='main_page '>
-          {User.email}
-          <div className='list  bg-light p-2 m-2 rounded-2'>
+      <span>Signed In as</span>
+          <h4>{User.email}</h4>
+          <div className='list  bg-light p-2 mt-3 mx-2 rounded-2'>
             {allRemind.length > 0 ?
               <ul>{
                 allRemind.map((ele, index) => {
@@ -74,7 +75,7 @@ function Remind({User}) {
           </div>
 
           <div className='add_reminder p-4 bg-dark m-2 rounded-4'>
-            <input type='text' className='m-2 py-2 rounded-2' placeholder='Enter a reminder..' value={reminder.text} onChange={(e) => setReminder({ ...reminder, text: e.target.value })} />
+            <input type='text' className='m-2 py-2 rounded-2' placeholder='Meeting at 10 O`clock' value={reminder.text} onChange={(e) => setReminder({ ...reminder, text: e.target.value })} />
 
             <DatePicker selected={startDate} className='m-2 py-2 rounded-2' onChange={(date) => {
               setStartDate(date)
@@ -87,7 +88,7 @@ function Remind({User}) {
               console.log(time)
             }} />
             <div>
-              <button className='btn btn-success' onClick={() => addRemind()}>Add</button>
+              <button className='btn btn-success' onClick={() => addRemind()}>Add a reminder</button>
             </div>
 
           </div>

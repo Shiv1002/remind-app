@@ -56,10 +56,14 @@ function App() {
     .catch((err)=>{
       console.log(err)
       switch(err.code){
-          case "auth/Invalid-email":
+          case "auth/invalid-email":
+            setEmailError("Invalid email")
+            break
           case "auth/user-disabled":
+            setEmailError("Permission blocked")
+            break
           case "auth/user-not-found":
-            setEmailError(err.message);
+            setEmailError("User not found"); 
             break;
           case "auth/wrong-password":
             setPasswordError(err.message);
@@ -92,20 +96,24 @@ function App() {
     <div className="">{
       isLogged ?
       <>
-      <button className='btn btn-success' onClick={setLogout}>logout</button>
+      <span className='d-flex justify-content-end'><button className='btn position-absolute btn-success z-3 m-2 ' onClick={setLogout}>logout</button></span>
+      
       <Remind  User={user}/>
       </>
         :
-        <div className='login_page'>
+        <div className='container bg-dark  col-xl-4 col-md-6 my-5 p-4 rounded-4 col-sm-8 '>
+        <div className='login_page d-flex flex-column align-items-center p-2'>
           
           <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e)=>setEmail(e.target.value)}/>
           <p className="errorMsg">{emailError}</p>
           <input type='password' value={password} required placeholder='Password' onChange={(e)=>setPassword(e.target.value)}/>
           {/* <button className='btn btn-success' onClick={setLogin}>login</button> */}
           <p className="errorMsg">{passwordError}</p>
-          <button onClick={handleLogin}>login</button>
-          <button onClick={signUp}>sign up</button>
+          <button onClick={handleLogin}>Login</button>
+          <button onClick={signUp}>Sign up</button>
         </div>
+        </div>
+        
     }
 
     </div>
