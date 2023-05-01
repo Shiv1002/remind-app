@@ -18,8 +18,8 @@ function Remind({User}) {
 
   useEffect(()=>{
     //start getting data of user
-    
-    axios.post(process.env.backend+'/user/getUser',{uid:User.uid})
+    console.log(process.env.URL,'is pinnged')
+    axios.post(process.env.URL+'/user/getUser',{uid:User.uid})
     .then((res)=>{setAllRemind(res.data[0].reminders);})
     .catch((err)=>console.log(err))
   },[User])
