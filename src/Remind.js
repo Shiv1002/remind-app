@@ -56,7 +56,7 @@ function Remind({ User,showToast }) {
   return (
     <div className='main_page '>
       <span className='text-light'>Signed In as</span>
-      <h4 className='text-light'>{User.email}</h4>
+      <h5 className='text-light'>{User.email}</h5>
       <div className='list  p-2 mt-3 mx-2 rounded-2'>
         {allRemind.length > 0 ?
           <ul>{

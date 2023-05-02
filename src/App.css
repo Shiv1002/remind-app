@@ -34,24 +34,36 @@ background-color: white;
 border-radius: 0.2rem;
 padding: 0.6rem 0;
 }
-.login_page input,.login_page  button{
+.login_page div{
+    width: 90%;
+}
+.login_page div,.login_page  button{
 margin: 0.6rem 0;
-padding:  0.5rem 0;
+padding:  0.6rem 0;
 border-radius: 1rem;
-width: 80%;
 border:0px;
 outline: 0;
 }
-.login_page input{
-    padding:10px;
+.login_page div{
+    padding:14px;
     background: black;
-    color: cornsilk;
+    color: hsl(48, 100%, 93%);
+}
+.login_page input{
+    background: black;
+    border: none;
+    color: white;
+    outline: none;
+    font-size: large;
+    letter-spacing: 1px;
+    width: 90%;
 }
 .login_page button{
     background-color: #ffffff;
     box-shadow: 0px 5px 3px 2px #2a2a2a;
     font-weight: 900;
-    font-size: large;
+    font-size: x-large;
+    width: 80%;
 }
 .login_page button:hover{
     color: white;

@@ -5,7 +5,8 @@ import Remind from './Remind';
 import auth from './Firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios';
-
+import { faEye, faEyeSlash,faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function App() {
   const [user, setUser] = useState({ uid: localStorage.getItem("userUid"), email: localStorage.getItem("userEmail") })
   const [isLogged, setIsLogged] = useState(false)
@@ -13,7 +14,8 @@ function App() {
   const [password, setPassword] = useState("")
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [toast,setToast] = useState("");
+  const [toast, setToast] = useState("");
+  const [showPass,setPass] = useState(false)
   useEffect(() => {
     if (localStorage.getItem("userUid")) {
       setIsLogged(true)
@@ -33,7 +35,7 @@ function App() {
   const setLogin = () => {
     setIsLogged(true)
     showToast("logged In")
-    
+
   }
   const setLogout = () => {
     clearInput()
@@ -96,29 +98,39 @@ function App() {
         console.log(err)
       })
   }
-  const showToast =(msg)=>{
+  const showToast = (msg) => {
     document.getElementById('cus-toast').classList.toggle('d-none')
     setToast(msg)
-    var Toast= setInterval(()=>{document.getElementById('cus-toast').classList.toggle('d-none')},3000)
-    setTimeout(()=>{clearInterval(Toast); setToast("")},3000)
-    
+    var Toast = setInterval(() => { document.getElementById('cus-toast').classList.toggle('d-none') }, 3000)
+    setTimeout(() => { clearInterval(Toast); setToast("") }, 3000)
+
   }
   return (
     <div className="root position-relative p-4 ">{
       isLogged ?
         <div>
-          <span className='d-flex justify-content-end'><button className='btn position-absolute btn-success btn-lg z-3 m-2 border-4' onClick={setLogout}>logout</button></span>
+          <span className='d-flex justify-content-end'><button className='btn position-absolute btn-success z-3 m-2 border-4' onClick={setLogout}>logout</button></span>
 
-          <Remind User={user}  showToast={showToast}/>
+          <Remind User={user} showToast={showToast} />
         </div>
         :
         <div className='container   rounded-4 col-xl-4 col-md-6 col-sm-8 col-xs-6  p-3 my-4'>
           <div className='login_page  d-flex flex-column align-items-center p-2 '>
+            <div className='d-flex align-items-center justify-content-between px-4'>
+              <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
+              <FontAwesomeIcon icon={faUser} color='white' />
+            </div>
 
-            <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
             <span className="errorMsg">{emailError}</span>
-            <input type='password' value={password} required placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
-            {/* <button className='btn btn-success' onClick={setLogin}>login</button> */}
+            <div className='d-flex align-items-center justify-content-between px-4'>
+              <input id='password' type='password' value={password} required placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+              {showPass ? <FontAwesomeIcon color='white' onClick={()=>{setPass(false);document.getElementById('password').type = 'password'}} icon={faEye} />:
+              <FontAwesomeIcon color='white' onClick={()=>{setPass(true);document.getElementById('password').type = 'text'}} icon={faEyeSlash} />
+              }
+              
+              
+             </div>
+
             <span className="errorMsg">{passwordError}</span>
             <button onClick={handleLogin}>Login</button>
             <button onClick={signUp}>Sign up</button>
@@ -126,7 +138,7 @@ function App() {
         </div>
 
     }
-    
+
       <div id="cus-toast" className='cus-toast d-none position-absolute end-0 bottom-0  p-3 m-3  bg-light rounded-2  '>
         <span className=''>{toast}</span>
       </div>
