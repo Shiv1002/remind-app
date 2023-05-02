@@ -75,7 +75,7 @@ function Remind({User}) {
           </div>
 
           <div className='add_reminder p-4 bg-dark m-2 rounded-4'>
-            <input type='text' className='m-2 py-2 rounded-2' placeholder='Meeting at 10 O`clock' value={reminder.text} onChange={(e) => setReminder({ ...reminder, text: e.target.value })} />
+            <input type='text' className='m-2 py-2 rounded-2' autoFocus placeholder='Meeting at 10 O`clock' value={reminder.text} onChange={(e) => setReminder({ ...reminder, text: e.target.value })} />
 
             <DatePicker selected={startDate} className='m-2 py-2 rounded-2' onChange={(date) => {
               setStartDate(date)

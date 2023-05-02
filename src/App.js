@@ -101,15 +101,15 @@ function App() {
       <Remind  User={user}/>
       </>
         :
-        <div className='container bg-dark  col-xl-4 col-md-6 my-5 p-4 rounded-4 col-sm-8 '>
+        <div className='container  my-5 p-4 rounded-4 col-xl-4 col-md-6 col-sm-8 col-xs-6  '>
         <div className='login_page d-flex flex-column align-items-center p-2'>
           
           <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e)=>setEmail(e.target.value)}/>
-          <p className="errorMsg">{emailError}</p>
+          <span className="errorMsg">{emailError}</span>
           <input type='password' value={password} required placeholder='Password' onChange={(e)=>setPassword(e.target.value)}/>
           {/* <button className='btn btn-success' onClick={setLogin}>login</button> */}
-          <p className="errorMsg">{passwordError}</p>
-          <button onClick={handleLogin}>Login</button>
+          <span className="errorMsg">{passwordError}</span>
+          <button  onClick={handleLogin}>Login</button>
           <button onClick={signUp}>Sign up</button>
         </div>
         </div>
