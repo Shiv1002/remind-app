@@ -71,7 +71,10 @@ outline: 0;
     
 }
 div#root{
-    background:linear-gradient(90deg, #030406, #585858c4);    
+    background:linear-gradient(90deg, #ff0000b8, #001cf2b5);    
+    /*  linear-gradient(90deg, #ff0090, #edf200) */
+    
+    /* linear-gradient(90deg,  #36ff00, #0097f2) */
 }
 .root{
     height: 100vh;
