@@ -2,6 +2,7 @@
     background:linear-gradient(90deg, #030406, #585858c4);
     
 }
+
 *{
     font-family: 'Cabin', sans-serif;
 }
@@ -11,7 +12,7 @@ ul{
 }
 .list li{
     padding: 1rem;
-    background-color: aqua;
+    background-color: white;
     margin: 0.4rem 0;
     border-radius: 1rem;
 }
@@ -67,7 +68,15 @@ outline: 0;
 .container{
     background: rgba(255, 255, 255, 0);
     box-shadow: 0px 0px 14px 10px #00000099;
+    
 }
 div#root{
-    background:linear-gradient(90deg, #030406, #585858c4);
+    background:linear-gradient(90deg, #030406, #585858c4);    
+}
+.root{
+    height: 100vh;
+    box-sizing: border-box;
+}
+.cus-toast{
+    transition:all cubic-bezier(0.075, 0.82, 0.165, 1);
 }
