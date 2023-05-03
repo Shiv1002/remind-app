@@ -105,6 +105,9 @@ function App() {
     setTimeout(() => { clearInterval(Toast); setToast("") }, 3000)
 
   }
+  const cus = ()=>{
+
+  }
   return (
     <div className="root position-relative p-4 ">{
       isLogged ?
@@ -128,7 +131,6 @@ function App() {
               <FontAwesomeIcon color='white' onClick={()=>{setPass(true);document.getElementById('password').type = 'text'}} icon={faEyeSlash} />
               }
               
-              
              </div>
 
             <span className="errorMsg">{passwordError}</span>
@@ -139,8 +141,9 @@ function App() {
 
     }
 
-      <div id="cus-toast" className='cus-toast d-none position-absolute end-0 bottom-0  p-3 m-3  bg-light rounded-2  '>
-        <span className=''>{toast}</span>
+      <div id="cus-toast"  className='cus-toast d-none position-absolute end-0 bottom-0  m-3  rounded-2  cust '>
+        <p className='p-3 m-0'>{toast}</p>
+        <span className='progress-bar'></span>
       </div>
     </div>
   );
