@@ -16,6 +16,7 @@ function App() {
   const [passwordError, setPasswordError] = useState("");
   const [toast, setToast] = useState("");
   const [showPass,setPass] = useState(false)
+  
   useEffect(() => {
     if (localStorage.getItem("userUid")) {
       setIsLogged(true)
@@ -99,15 +100,13 @@ function App() {
       })
   }
   const showToast = (msg) => {
-    document.getElementById('cus-toast').classList.toggle('d-none')
+    
     setToast(msg)
-    var Toast = setInterval(() => { document.getElementById('cus-toast').classList.toggle('d-none') }, 3000)
-    setTimeout(() => { clearInterval(Toast); setToast("") }, 3000)
+    document.getElementById('cus-toast').classList.toggle('cus-toast')
+    setTimeout(() => { document.getElementById('cus-toast').classList.toggle('cus-toast'); setToast("") }, 3000)
 
   }
-  const cus = ()=>{
-
-  }
+  
   return (
     <div className="root position-relative p-4 ">{
       isLogged ?
@@ -132,6 +131,7 @@ function App() {
               }
               
              </div>
+             <button onClick={()=>showToast("helloe")}>xyz</button>
 
             <span className="errorMsg">{passwordError}</span>
             <button onClick={handleLogin}>Login</button>
@@ -141,8 +141,8 @@ function App() {
 
     }
 
-      <div id="cus-toast"  className='cus-toast d-none position-absolute end-0 bottom-0  m-3  rounded-2  cust '>
-        <p className='p-3 m-0'>{toast}</p>
+      <div id="cus-toast"  className='op position-absolute end-0 bottom-0  m-3 rounded-2  '>
+        <p className='p-3 m-0'>{toast} </p>
         <span className='progress-bar'></span>
       </div>
     </div>

@@ -9,18 +9,17 @@ import { faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 function Remind({ User,showToast }) {
-
-
   const [allRemind, setAllRemind] = useState([])
   const [startDate, setStartDate] = useState(new Date());
   const [time, setTime] = useState('00:00');
-  const [reminder, setReminder] = useState({ text: "", date: startDate, time: '00:00' });
+
+  const [reminder, setReminder] = useState({ text: "", date: startDate, time: '00:00',timezone:Intl.DateTimeFormat().resolvedOptions().timeZone.toString() });
 
   useEffect(() => {
     //start getting data of user
     console.log(process.env.BACKURL, 'is pinnged')
-    axios.post('https://reminderserver-production.up.railway.app/user/getUser', { uid: User.uid })
-      .then((res) => { setAllRemind(res.data[0].reminders); })
+    axios.post('https://reminder-server-application.onrender.com/user/getUser', { uid: User.uid })
+      .then((res) => { console.log(res);setAllRemind(res.data[0].reminders); })
       .catch((err) => console.log(err))
   }, [User])
 
@@ -30,7 +29,7 @@ function Remind({ User,showToast }) {
     console.log(reminderName)
     //sending update requesst to database
     // sending 0 as parameter to delete reminder with namee
-    axios.post(`https://reminderserver-production.up.railway.app/user/${User.uid}/0`, { reminderName })
+    axios.post(`https://reminder-server-application.onrender.com/user/${User.uid}/0`, { reminderName })
       .then((rs) => console.log(rs.data))
       .catch((err) => console.log(err))
 
@@ -44,7 +43,7 @@ function Remind({ User,showToast }) {
     console.log(allRemind)
     //sending update requesst to database
     // sending 1 as parameter to add reminder
-    axios.post(`https://reminderserver-production.up.railway.app/user/${User.uid}/1`, reminder)
+    axios.post(`https://reminder-server-application.onrender.com/user/${User.uid}/1`, reminder)
       .then((rs) => console.log(rs.data))
       .catch((err) => console.log(err))
 
@@ -85,7 +84,7 @@ function Remind({ User,showToast }) {
 
         <DatePicker selected={startDate} className='m-2 py-2 rounded-2' onChange={(date) => {
           setStartDate(date)
-          setReminder({ ...reminder, date: { year: date.getFullYear(), month: date.getMonth(), day: date.getDate() } })
+          setReminder({ ...reminder, date: { year: date.getFullYear(), month: date.getMonth()+1, day: date.getDate() } })
           console.log(reminder)
         }} />
         <TimePicker className="timepicker m-2 py-2" value={time} onChange={(newTime) => {

@@ -92,7 +92,7 @@ div#root{
     height: 100vh;
     box-sizing: border-box;
 }
-@keyframes progress {
+@keyframes progress-An {
     0%{
        width: 100%;
     }
@@ -101,18 +101,22 @@ div#root{
        width: 0%;
     }
 }
-
-.cus-toast{
+@keyframes progress-comp{
+    0%{opacity: 0 ; background-color: red;}
+    100%{opacity: 1 ;background-color: blue}
     
-    background-color: #ffffff;
-    /* animation: progress 1s alternate-reverse infinite;  */
+}
+.cus-toast{
+    animation: progress-comp 3s  infinite; 
+    }
+.op{
+    opacity: 0;
 }
 .progress-bar{
     height: 5px;
-    animation: progress 3s infinite;
+    animation: progress-An 3s infinite;
     background-color: grey;
 }
-.cus-toast:hover .progress-bar{
+.cus-toast:hover  , .cus-toast:hover  .progress-bar{
 animation-play-state: paused;
-background-color: #ff0000;
 }
