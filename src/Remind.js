@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,10 +13,11 @@ function Remind({ User, showToast }) {
   const [startDate, setStartDate] = useState(new Date());
   const [time, setTime] = useState('00:00');
   const [index, setIndex] = useState(0)
-  const init = { text: "", date: startDate, time: '00:00', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone.toString() }
-  
+  const init = useMemo(() => {
+    return { text: "", date: new Date(), time: '00:00', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone.toString() }
+  }, [])
   const [reminder, setReminder] = useState(init);
-  const [isDisabled,setDisabled] = useState(true)
+  const [isDisabled, setDisabled] = useState(true)
   useEffect(() => {
     //start getting data of user
     console.log(process.env.BACKURL, 'is pinnged')
@@ -24,15 +25,15 @@ function Remind({ User, showToast }) {
       .then((res) => { console.log(res); setAllRemind(res.data[0].reminders); })
       .catch((err) => console.log(err))
   }, [User])
-useEffect(()=>{
-for(var obj in reminder){
-  if(obj!=='timezone' && reminder[obj] === init[obj]){
-    setDisabled(true)
-    return
-  }
-  setDisabled(false)
-}
-},[reminder])
+  useEffect(() => {
+    for (var obj in reminder) {
+      if (obj !== 'timezone' && obj !=='time' && reminder[obj] === init[obj]) {
+        setDisabled(true)
+        return
+      }
+      setDisabled(false)
+    }
+  }, [reminder, init])
 
   const delRemind = (index) => {
     //get confirm kill
