@@ -64,7 +64,6 @@ function App() {
         switch (err.code) {
           case "auth/invalid-email":
             setEmailError("Invalid email")
-
             break
           case "auth/user-disabled":
             setEmailError("Permission blocked")
@@ -73,7 +72,7 @@ function App() {
             setEmailError("User not found");
             break;
           case "auth/wrong-password":
-            setPasswordError(err.message);
+            setPasswordError("wrong password");
             break;
           default:
         }
@@ -118,6 +117,7 @@ function App() {
         :
         <div className='container   rounded-4 col-xl-4 col-md-6 col-sm-8 col-xs-6  p-3 my-4'>
           <div className='login_page  d-flex flex-column align-items-center p-2 '>
+            <h1 className='text-light'>Reminder</h1>
             <div className='d-flex align-items-center justify-content-between px-4'>
               <input type='email' value={email} autoFocus required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
               <FontAwesomeIcon icon={faUser} color='white' />
@@ -131,8 +131,6 @@ function App() {
               }
               
              </div>
-             <button onClick={()=>showToast("helloe")}>xyz</button>
-
             <span className="errorMsg">{passwordError}</span>
             <button onClick={handleLogin}>Login</button>
             <button onClick={signUp}>Sign up</button>

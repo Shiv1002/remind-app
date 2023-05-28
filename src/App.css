@@ -35,7 +35,7 @@ border-radius: 0.2rem;
 padding: 0.6rem 0;
 }
 .login_page div{
-    width: 90%;
+    width: 100%;
 }
 .login_page div,.login_page  button{
 margin: 0.6rem 0;
@@ -54,15 +54,15 @@ outline: 0;
     border: none;
     color: white;
     outline: none;
-    font-size: large;
+    font-size: medium;
     letter-spacing: 1px;
-    width: 90%;
+    width: 100%;
 }
 .login_page button{
     background-color: #ffffff;
     box-shadow: 0px 5px 3px 2px #2a2a2a;
     font-weight: 900;
-    font-size: x-large;
+    font-size: large;
     width: 80%;
 }
 .login_page button:hover{
@@ -102,12 +102,13 @@ div#root{
     }
 }
 @keyframes progress-comp{
-    0%{opacity: 0 ; background-color: red;}
-    100%{opacity: 1 ;background-color: blue}
+    0%{opacity: 0 ; ;}
+    100%{opacity: 1 ;}
     
 }
 .cus-toast{
     animation: progress-comp 3s  infinite; 
+    background-color: white;
     }
 .op{
     opacity: 0;
@@ -117,9 +118,7 @@ div#root{
     animation: progress-An 3s infinite;
     background-color: grey;
 }
-.cus-toast:hover  , .cus-toast:hover  .progress-bar{
-animation-play-state: paused;
-}
+
 
 .delete-card{
 border-radius: 1rem;

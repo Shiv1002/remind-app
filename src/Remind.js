@@ -7,8 +7,11 @@ import 'react-clock/dist/Clock.css';
 import TimePicker from 'react-time-picker';
 import { faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 import axios from 'axios';
 function Remind({ User, showToast }) {
+  const [isLoading, setLoading] = useState(false)
   const [allRemind, setAllRemind] = useState([])
   const [startDate, setStartDate] = useState(new Date());
   const [time, setTime] = useState('00:00');
@@ -21,13 +24,14 @@ function Remind({ User, showToast }) {
   useEffect(() => {
     //start getting data of user
     console.log(process.env.BACKURL, 'is pinnged')
+    setLoading(true)
     axios.post('https://reminder-server-application.onrender.com/user/getUser', { uid: User.uid })
-      .then((res) => { console.log(res); setAllRemind(res.data[0].reminders); })
-      .catch((err) => console.log(err))
-  }, [User])
+      .then((res) => { console.log(res); setAllRemind(res.data[0].reminders); setLoading(false) })
+      .catch((err) => { console.log(err); setLoading(false); showToast("Could not load!!") })
+  }, [User, showToast])
   useEffect(() => {
     for (var obj in reminder) {
-      if (obj !== 'timezone' && obj !=='time' && reminder[obj] === init[obj]) {
+      if (obj !== 'timezone' && obj !== 'time' && reminder[obj] === init[obj]) {
         setDisabled(true)
         return
       }
@@ -73,31 +77,45 @@ function Remind({ User, showToast }) {
     setIndex(0)
   }
   return (
-    <div className='main_page '>
+    <div className='main_page mx-auto col-lg-8 col-md-10 col-sm-12'>
+      <div className='placeholders'>
 
+
+      </div>
       <span className='text-light'>Signed In as</span>
       <h5 className='text-light'>{User.email}</h5>
       <div className='list  p-2 mt-3 mx-2 rounded-2'>
-        {allRemind.length > 0 ?
-          <ul>{
-            allRemind.map((ele, index) => {
-              return <li className='d-flex justify-content-between' key={ele.text} >
-                <div>
-                  <h2>{ele.text}</h2>
-                  <span>{Object.values(ele.date).join("/")}</span>
-                  <span>{ele.time}</span>
-                  <FontAwesomeIcon icon={faClock} />
-                </div>
-                <div className='d-flex align-items-center'>
-                  <FontAwesomeIcon style={{ color: '#cc1c1c' }} icon={faTrash} size='xl' className='del' onClick={(e) => delRemind(index)} />
-                </div>
-              </li>
-            })
-          }
-          </ul>
-          : <div className='bg-light d-flex justify-content-center p-3 rounded-4'>
-            <h4 className=''>No Reminders Yet...</h4>
-          </div>}
+        {
+          isLoading ? <Stack spacing={1}>
+            <Skeleton variant="rounded-4" height={100} />
+            <Skeleton variant="rounded" height={100} />
+          </Stack> :
+
+            allRemind.length > 0 ?
+
+              <ul>{
+                allRemind.map((ele, index) => {
+                  return <li className='d-flex justify-content-between' key={ele.text} >
+                    <div>
+                      <h2>{ele.text}</h2>
+                      <span>{Object.values(ele.date).join("/")}</span>
+                      <span>{ele.time}</span>
+                      <FontAwesomeIcon icon={faClock} />
+                    </div>
+                    <div className='d-flex align-items-center'>
+                      <FontAwesomeIcon style={{ color: '#cc1c1c' }} icon={faTrash} size='xl' className='del' onClick={(e) => delRemind(index)} />
+                    </div>
+                  </li>
+                })
+              }
+              </ul>
+
+
+              :
+              <div className='bg-light d-flex justify-content-center p-3 rounded-4'>
+                <h4 className=''>No Reminders Yet...</h4>
+              </div>
+        }
       </div>
 
       <div className='add_reminder p-4 bg-dark m-2 rounded-4'>
