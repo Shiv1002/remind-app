@@ -8,36 +8,42 @@ import TimePicker from 'react-time-picker';
 import { faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-function Remind({ User,showToast }) {
+function Remind({ User, showToast }) {
   const [allRemind, setAllRemind] = useState([])
   const [startDate, setStartDate] = useState(new Date());
   const [time, setTime] = useState('00:00');
-
-  const [reminder, setReminder] = useState({ text: "", date: startDate, time: '00:00',timezone:Intl.DateTimeFormat().resolvedOptions().timeZone.toString() });
-
+  const [index, setIndex] = useState(0)
+  const init = { text: "", date: startDate, time: '00:00', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone.toString() }
+  
+  const [reminder, setReminder] = useState(init);
+  const [isDisabled,setDisabled] = useState(true)
   useEffect(() => {
     //start getting data of user
     console.log(process.env.BACKURL, 'is pinnged')
     axios.post('https://reminder-server-application.onrender.com/user/getUser', { uid: User.uid })
-      .then((res) => { console.log(res);setAllRemind(res.data[0].reminders); })
+      .then((res) => { console.log(res); setAllRemind(res.data[0].reminders); })
       .catch((err) => console.log(err))
   }, [User])
+useEffect(()=>{
+for(var obj in reminder){
+  if(obj!=='timezone' && reminder[obj] === init[obj]){
+    setDisabled(true)
+    return
+  }
+  setDisabled(false)
+}
+},[reminder])
 
   const delRemind = (index) => {
-    var reminderName = 0
-    setAllRemind(allRemind.filter((ele, i) => { if (i !== index) { return true } else { reminderName = ele.text; return false } }))
-    console.log(reminderName)
-    //sending update requesst to database
-    // sending 0 as parameter to delete reminder with namee
-    axios.post(`https://reminder-server-application.onrender.com/user/${User.uid}/0`, { reminderName })
-      .then((rs) => console.log(rs.data))
-      .catch((err) => console.log(err))
-
+    //get confirm kill
+    document.getElementsByClassName('delete')[0].classList.toggle('d-none')
+    setIndex(index)
   }
+
   const addRemind = () => {
-    if(reminder.text === ""){
+    if (reminder.text === "") {
       showToast("Enter something to be remind of")
-      return 
+      return
     }
     setAllRemind([...allRemind, reminder])
     console.log(allRemind)
@@ -51,9 +57,23 @@ function Remind({ User,showToast }) {
     setReminder({ ...reminder, text: "", date: startDate })
 
   }
+  const confirmDel = (index) => {
 
+    var reminderName = 0
+    setAllRemind(allRemind.filter((ele, i) => { if (i !== index) { return true } else { reminderName = ele.text; return false } }))
+    console.log(reminderName)
+    //sending update requesst to database
+    // sending 0 as parameter to delete reminder with namee
+    axios.post(`https://reminder-server-application.onrender.com/user/${User.uid}/0`, { reminderName })
+      .then((rs) => console.log(rs.data))
+      .catch((err) => console.log(err))
+
+    document.getElementsByClassName('delete')[0].classList.toggle('d-none')
+    setIndex(0)
+  }
   return (
     <div className='main_page '>
+
       <span className='text-light'>Signed In as</span>
       <h5 className='text-light'>{User.email}</h5>
       <div className='list  p-2 mt-3 mx-2 rounded-2'>
@@ -76,7 +96,7 @@ function Remind({ User,showToast }) {
           </ul>
           : <div className='bg-light d-flex justify-content-center p-3 rounded-4'>
             <h4 className=''>No Reminders Yet...</h4>
-            </div>}
+          </div>}
       </div>
 
       <div className='add_reminder p-4 bg-dark m-2 rounded-4'>
@@ -84,7 +104,8 @@ function Remind({ User,showToast }) {
 
         <DatePicker selected={startDate} className='m-2 py-2 rounded-2' onChange={(date) => {
           setStartDate(date)
-          setReminder({ ...reminder, date: { year: date.getFullYear(), month: date.getMonth()+1, day: date.getDate() } })
+          setReminder({ ...reminder, date: { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() } })
+
           console.log(reminder)
         }} />
         <TimePicker className="timepicker m-2 py-2" value={time} onChange={(newTime) => {
@@ -93,9 +114,22 @@ function Remind({ User,showToast }) {
           console.log(time)
         }} />
         <div>
-          <button className='btn btn-success' onClick={() => addRemind()}>Add a reminder</button>
+          <button id='addRemind' className='btn btn-success' disabled={isDisabled} onClick={() => addRemind()} >Add a reminder</button>
         </div>
 
+      </div>
+      <div className='delete d-none'>
+        <div id='delete-card' className='delete-card  d-flex flex-column align-items-center bg-light px-4 py-3'>
+          <p className='h5'>Are you Sure?</p>
+          <div className='m-2 '>
+            <button className='btn mx-2 btn-success' onClick={() =>
+              document.getElementsByClassName('delete')[0].classList.toggle('d-none')}>Cancel</button>
+            <button className='btn mx-2 btn-danger' onClick={() => confirmDel(index)}>Confirm</button>
+
+          </div>
+
+        </div>
+        <div className='overlay'></div>
       </div>
 
     </div>
