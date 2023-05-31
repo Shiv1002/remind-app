@@ -33,6 +33,7 @@ function Remind({ User, showToast }) {
     for (var obj in reminder) {
       if (obj !== 'timezone' && obj !== 'time' && reminder[obj] === init[obj]) {
         setDisabled(true)
+        // console.log(obj)
         return
       }
       setDisabled(false)
@@ -51,15 +52,15 @@ function Remind({ User, showToast }) {
       return
     }
     setAllRemind([...allRemind, reminder])
-    console.log(allRemind)
+    // console.log(allRemind)
     //sending update requesst to database
     // sending 1 as parameter to add reminder
     axios.post(`https://reminder-server-application.onrender.com/user/${User.uid}/1`, reminder)
       .then((rs) => console.log(rs.data))
       .catch((err) => console.log(err))
 
-    setStartDate(new Date())
-    setReminder({ ...reminder, text: "", date: startDate })
+    setStartDate(init.date)
+    setReminder(init)
 
   }
   const confirmDel = (index) => {

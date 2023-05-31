@@ -30,7 +30,7 @@ function App() {
     setPassword("")
     setPasswordError("")
     setEmailError("")
-
+    setPass(false)
   }
 
   const setLogin = () => {
