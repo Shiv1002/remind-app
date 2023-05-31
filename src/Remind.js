@@ -27,8 +27,8 @@ function Remind({ User, showToast }) {
     setLoading(true)
     axios.post('https://reminder-server-application.onrender.com/user/getUser', { uid: User.uid })
       .then((res) => { console.log(res); setAllRemind(res.data[0].reminders); setLoading(false) })
-      .catch((err) => { console.log(err); setLoading(false); showToast("Could not load!!") })
-  }, [User, showToast])
+      .catch((err) => { console.log(err); setLoading(false); })
+  }, [User])
   useEffect(() => {
     for (var obj in reminder) {
       if (obj !== 'timezone' && obj !== 'time' && reminder[obj] === init[obj]) {
