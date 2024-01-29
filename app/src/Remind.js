@@ -69,7 +69,7 @@ function Remind({ User, showToast }) {
     //sending update requesst to database
     // sending 1 as parameter to add reminder
     axios
-      .post(REACT_APP_BACKEND + `/user/${User.uid}`, reminder)
+      .post(process.env.REACT_APP_BACKEND + `/user/${User.uid}`, reminder)
       .then((rs) => console.log(rs.data))
       .catch((err) => console.log(err));
 
