@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+          font-family: sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body *{
+    margin: 0.2rem;
+    padding: 0.4rem;
+    
+        }
+    
+        h1 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: aliceblue;
+        }
+    
+        .body {
+            font-size: large;
+    background-color: #005fff;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 60%;
+    
+        }
+    
+        .website {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: aliceblue;
+          margin: 30% auto 0% auto;
+          width: fit-content;
+        }
+    
+        button {
+          padding: 0.5rem;
+          border-radius: 5px;
+          border: none;
+        }
+    
+        a {
+          text-decoration: none;
+          font-size: medium;
+          color: black;
+        }
+    
+        .white {
+          color: white;
+        }
+</style>    
+</head>
+<body>
+    <div class="body white">
+      <%= time %> Minutes is left for your task 
+        <p><%= task %></p>
+        <div class="website">
+            <button>
+                <a href="https://react-reminder-application.netlify.app">Go to Website</a>
+              </button>
+        </div>
+    </div>
+    
+</body>
+</html>

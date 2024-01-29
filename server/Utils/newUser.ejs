@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title> </title>
+    <style>
+      * {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body * {
+        margin: 0.2rem;
+        padding: 0.4rem;
+      }
+
+      h1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: aliceblue;
+      }
+
+      .body {
+        background-color: #005fff;
+        margin: 0 auto;
+        padding: 1rem;
+        width: 60%;
+      }
+
+      .website {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: aliceblue;
+        margin: 30% auto 0% auto;
+        width: fit-content;
+      }
+
+      button {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: none;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: medium;
+        color: black;
+      }
+
+      .white {
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="body">
+      <h1>You successfully logged in your account</h1>
+      <div class="white">
+        <h3>Dear User,</h3>
+        <p>
+          We are writing to confirm that you have successfully logged into your
+          account on react-reminder-application. We hope you are enjoying your
+          experience with our platform so far!
+        </p>
+        <p>
+          If you have any questions or concerns about your account, please do
+          not hesitate to contact us at
+          <a class="white" href="https://react-reminder-application.netlify.app"
+            >react-reminder-application</a
+          >. We are always happy to help.
+        </p>
+      </div>
+      <div class="website">
+        <h3>GO TO THE WEBSITE</h3>
+
+        <button>
+          <a href="https://react-reminder-application.netlify.app">Website</a>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
